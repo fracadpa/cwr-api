@@ -1,0 +1,47 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "NestJS Debug",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": [
+                "run-script",
+                "start:debug"
+            ],
+            "args": [
+                "${workspaceFolder}/src/main.ts"
+            ],
+            "console": "integratedTerminal",
+            "sourceMaps": true,
+            "outFiles": [
+                "${workspaceFolder}/dist/**/*.js"
+            ],
+            "autoAttachChildProcesses": true, // Useful if your app spawns child processes
+            "restart": true // Automatically restarts the debugger on changes if --watch is used
+        },
+        {
+            "name": "Launch app",
+            "type": "node",
+            "request": "launch",
+            "args": [
+                "${workspaceRoot}/src/main.ts"
+            ],
+            "runtimeArgs": [
+                "-r",
+                "ts-node/register",
+                "-r",
+                "tsconfig-paths/register"
+            ],
+            "cwd": "${workspaceRoot}",
+            "internalConsoleOptions": "openOnSessionStart",
+            "env": {
+                "NODE_PORT": "5000"
+            },
+            "sourceMaps": true,
+            "console": "internalConsole",
+            "outputCapture": "std"
+        }
+    ]
+}
