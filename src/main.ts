@@ -1,6 +1,4 @@
 import 'dotenv/config';
-// Register path aliases before any other imports
-import 'tsconfig-paths/register';
 
 import {
   ClassSerializerInterceptor,
@@ -11,6 +9,16 @@ import { ConfigService } from '@nestjs/config';
 import { NestFactory, Reflector } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { useContainer } from 'class-validator';
+
+// Register path aliases only in development
+// In production (webpack), paths are resolved by webpack alias
+
+void (
+  process.env.NODE_ENV !== 'production' &&
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  require('tsconfig-paths/register')
+);
+
 import { AppModule } from './app.module';
 import validationOptions from './utils/validation-options';
 import { AllConfigType } from './config/config.type';

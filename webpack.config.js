@@ -10,6 +10,13 @@ module.exports = (options, webpack) => {
       ...options.output,
       filename: 'main.js',
     },
+    resolve: {
+      ...options.resolve,
+      alias: {
+        ...options.resolve?.alias,
+        '@app': require('path').resolve(__dirname, 'src/'),
+      },
+    },
     plugins: [
       ...options.plugins,
       new webpack.IgnorePlugin({
