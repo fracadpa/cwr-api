@@ -355,6 +355,95 @@ const app = await NestFactory.create(AppModule, {
 
 ## Troubleshooting
 
+### Issue: "Cannot find module '@app/...' on Vercel"
+
+**Error**:
+```
+Cannot find module '@app/companies/companies.service'
+```
+
+**Solution**: Path aliases need to be registered at runtime.
+
+**Steps**:
+1. ✅ Ensure `src/main.ts` imports `tsconfig-paths/register` first:
+```typescript
+import 'dotenv/config';
+import 'tsconfig-paths/register';  // Must be before other imports
+import { NestFactory } from '@nestjs/core';
+// ... rest of imports
+```
+
+2. ✅ Configure `nest-cli.json` for webpack:
+```json
+{
+  "compilerOptions": {
+    "builder": "webpack",
+    "webpack": true,
+    "webpackConfigPath": "webpack.config.js",
+    "tsConfigPath": "tsconfig.build.json"
+  }
+}
+```
+
+3. ✅ Create `webpack.config.js`:
+```javascript
+export default (options, webpack) => ({
+  ...options,
+  output: { ...options.output, filename: 'main.js' },
+  plugins: [
+    ...options.plugins,
+    new webpack.IgnorePlugin({
+      checkResource(resource) {
+        return [
+          '@nestjs/microservices/microservices-module',
+          '@nestjs/websockets/socket-module',
+        ].includes(resource) ? !tryResolve(resource) : false;
+      },
+    }),
+  ],
+});
+
+function tryResolve(module) {
+  try {
+    require.resolve(module);
+    return true;
+  } catch {
+    return false;
+  }
+}
+```
+
+4. ✅ Ensure `tsconfig.json` has proper paths:
+```json
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": { "@app/*": ["src/*"] }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "test", "dist"]
+}
+```
+
+5. ✅ Update `vercel.json` to remove `.env.production` from includeFiles (it's not needed):
+```json
+{
+  "builds": [{
+    "config": {
+      "includeFiles": ["dist/**", "node_modules/**"]
+    }
+  }]
+}
+```
+
+6. ✅ Rebuild and deploy:
+```bash
+npm run build
+vercel --prod
+```
+
+**Why this works**: `tsconfig-paths/register` registers the TypeScript path aliases with Node.js at runtime, allowing the compiled JavaScript to resolve `@app/*` imports correctly.
+
 ### Issue: Cold Start Time Too Long
 
 **Solution**:

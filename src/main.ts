@@ -1,4 +1,7 @@
 import 'dotenv/config';
+// Register path aliases before any other imports
+import 'tsconfig-paths/register';
+
 import {
   ClassSerializerInterceptor,
   ValidationPipe,

@@ -36,6 +36,7 @@ export default [
         tsconfigRootDir: __dirname,
       },
     },
+    ignores: ['test/**/*', '**/*.spec.ts', '**/*.test.ts'],
     rules: {
       '@typescript-eslint/interface-name-prefix': 'off',
       '@typescript-eslint/explicit-function-return-type': 'off',
@@ -60,6 +61,35 @@ export default [
           message: '"it" should start with "should"',
         },
       ],
+    },
+  },
+  {
+    files: ['test/**/*', '**/*.spec.ts', '**/*.test.ts'],
+    plugins: {
+      '@typescript-eslint': tsEslintPlugin,
+    },
+    languageOptions: {
+      globals: {
+        ...globals.node,
+        ...globals.jest,
+      },
+      parser: tsParser,
+      ecmaVersion: 5,
+      sourceType: 'module',
+      parserOptions: {
+        project: false,
+      },
+    },
+    rules: {
+      '@typescript-eslint/interface-name-prefix': 'off',
+      '@typescript-eslint/explicit-function-return-type': 'off',
+      '@typescript-eslint/explicit-module-boundary-types': 'off',
+      '@typescript-eslint/no-explicit-any': 'off',
+      'no-unused-vars': 'off',
+      '@typescript-eslint/no-unused-vars': 'off',
+      'require-await': 'off',
+      '@typescript-eslint/require-await': 'off',
+      '@typescript-eslint/no-floating-promises': 'off',
     },
   },
 ];

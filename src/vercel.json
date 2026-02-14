@@ -15,8 +15,7 @@
         "memory": 1024,
         "includeFiles": [
           "dist/**",
-          "node_modules/**",
-          ".env.production"
+          "node_modules/**"
         ]
       }
     }
