@@ -1,7 +1,6 @@
 {
   "version": 2,
   "buildCommand": "npm run build",
-  "outputDirectory": "dist",
   "env": {
     "NODE_ENV": "production",
     "NODE_OPTIONS": "--max-old-space-size=3008"
@@ -20,57 +19,35 @@
       }
     }
   ],
-  "headers": [
+  "routes": [
     {
-      "source": "/api/(.*)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, s-maxage=3600, stale-while-revalidate=86400"
-        }
-      ]
+      "src": "/api/(.*)",
+      "headers": {
+        "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=86400"
+      },
+      "continue": true
     },
     {
-      "source": "/docs(.*)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, s-maxage=3600"
-        }
-      ]
+      "src": "/docs(.*)",
+      "headers": {
+        "Cache-Control": "public, s-maxage=3600"
+      },
+      "continue": true
     },
     {
-      "source": "/(.*)",
-      "headers": [
-        {
-          "key": "X-Content-Type-Options",
-          "value": "nosniff"
-        },
-        {
-          "key": "X-Frame-Options",
-          "value": "DENY"
-        },
-        {
-          "key": "X-XSS-Protection",
-          "value": "1; mode=block"
-        },
-        {
-          "key": "Referrer-Policy",
-          "value": "strict-origin-when-cross-origin"
-        },
-        {
-          "key": "Permissions-Policy",
-          "value": "geolocation=(), microphone=(), camera=()"
-        }
-      ]
-    }
-  ],
-  "rewrites": [
+      "src": "/(.*)",
+      "headers": {
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "DENY",
+        "X-XSS-Protection": "1; mode=block",
+        "Referrer-Policy": "strict-origin-when-cross-origin",
+        "Permissions-Policy": "geolocation=(), microphone=(), camera=()"
+      },
+      "continue": true
+    },
     {
-      "source": "/(.*)",
-      "destination": "/dist/main.js"
+      "src": "/(.*)",
+      "dest": "dist/main.js"
     }
-  ],
-  "cleanUrls": true,
-  "trailingSlash": false
+  ]
 }
