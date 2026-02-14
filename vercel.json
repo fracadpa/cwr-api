@@ -5,12 +5,6 @@
     "NODE_ENV": "production",
     "NODE_OPTIONS": "--max-old-space-size=3008"
   },
-  "functions": {
-    "api/index.js": {
-      "maxDuration": 30,
-      "memory": 1024
-    }
-  },
   "rewrites": [
     {
       "source": "/(.*)",
