@@ -1,0 +1,70 @@
+# Git files
+.git
+.gitignore
+.gitattributes
+
+# Node modules (installed fresh on Vercel)
+node_modules
+
+# Development files
+.env
+.env.local
+.env.*.local
+.env.example
+env-example-*
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# Build artifacts
+dist
+build
+.tsbuildinfo
+
+# Test files
+test
+coverage
+jest.config.js
+jest-e2e.json
+*.spec.ts
+*.test.ts
+
+# Documentation
+docs
+README.md
+CONTRIBUTING.md
+*.md
+
+# Docker files
+docker-compose*.yaml
+*.Dockerfile
+Dockerfile
+wait-for-it.sh
+startup.*.sh
+
+# CI/CD
+.github
+.gitlab-ci.yml
+.circleci
+.travis.yml
+
+# Other
+.husky
+.lint-staged
+.npmrc
+renovate.json
+commitlint.config.js
+Procfile
+
+# Database
+*.sqlite
+*.db
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
