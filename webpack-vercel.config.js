@@ -1,4 +1,5 @@
 const path = require('path');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = (options, webpack) => {
   const lazyImports = [
@@ -35,6 +36,11 @@ module.exports = (options, webpack) => {
           }
           return false;
         },
+      }),
+      new CopyPlugin({
+        patterns: [
+          { from: 'src/i18n', to: 'i18n' },
+        ],
       }),
     ],
   };

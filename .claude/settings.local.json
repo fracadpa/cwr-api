@@ -5,7 +5,9 @@
       "Bash(npm run test:*)",
       "Bash(npm run migration:generate:*)",
       "Bash(ls:*)",
-      "Bash(npm run build:vercel:*)"
+      "Bash(npm run build:vercel:*)",
+      "Bash(npm ls:*)",
+      "Bash(npm install:*)"
     ]
   }
 }
