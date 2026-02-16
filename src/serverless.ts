@@ -25,9 +25,13 @@ async function bootstrap(): Promise<express.Express> {
     return cachedApp;
   }
 
-  const app = await NestFactory.create(AppModule, new ExpressAdapter(expressApp), {
-    cors: true,
-  });
+  const app = await NestFactory.create(
+    AppModule,
+    new ExpressAdapter(expressApp),
+    {
+      cors: true,
+    },
+  );
 
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
   const configService = app.get(ConfigService<AllConfigType>);
