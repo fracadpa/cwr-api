@@ -6,8 +6,11 @@ import {
 import { FilesLocalController } from './files.controller';
 import { MulterModule } from '@nestjs/platform-express';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { diskStorage } from 'multer';
+import { diskStorage, memoryStorage } from 'multer';
 import { randomStringGenerator } from '@nestjs/common/utils/random-string-generator.util';
+
+const isServerless =
+  !!process.env.VERCEL || !!process.env.AWS_LAMBDA_FUNCTION_NAME;
 
 import { FilesLocalService } from './files.service';
 
@@ -47,19 +50,20 @@ const infrastructurePersistenceModule = (databaseConfig() as DatabaseConfig)
 
             callback(null, true);
           },
-          storage: diskStorage({
-            destination:
-              process.env.NODE_ENV === 'production' ? '/tmp/files' : './files',
-            filename: (request, file, callback) => {
-              callback(
-                null,
-                `${randomStringGenerator()}.${file.originalname
-                  .split('.')
-                  .pop()
-                  ?.toLowerCase()}`,
-              );
-            },
-          }),
+          storage: isServerless
+            ? memoryStorage()
+            : diskStorage({
+                destination: './files',
+                filename: (request, file, callback) => {
+                  callback(
+                    null,
+                    `${randomStringGenerator()}.${file.originalname
+                      .split('.')
+                      .pop()
+                      ?.toLowerCase()}`,
+                  );
+                },
+              }),
           limits: {
             fileSize: configService.get('file.maxFileSize', { infer: true }),
           },
