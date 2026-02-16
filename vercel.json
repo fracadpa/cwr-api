@@ -8,7 +8,8 @@
   "functions": {
     "api/main.js": {
       "memory": 1024,
-      "maxDuration": 30
+      "maxDuration": 30,
+      "includeFiles": "dist/i18n/**,src/mail/mail-templates/**"
     }
   },
   "rewrites": [
