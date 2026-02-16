@@ -19,7 +19,6 @@ env-example-*
 *~
 
 # Build artifacts
-dist
 build
 .tsbuildinfo
 

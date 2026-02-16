@@ -3,7 +3,9 @@
     "allow": [
       "Bash(npm run build:*)",
       "Bash(npm run test:*)",
-      "Bash(npm run migration:generate:*)"
+      "Bash(npm run migration:generate:*)",
+      "Bash(ls:*)",
+      "Bash(npm run build:vercel:*)"
     ]
   }
 }
